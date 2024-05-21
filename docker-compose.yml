@@ -1,0 +1,22 @@
+version: '3.9'  # Specify Docker Compose version
+
+services:
+  app:
+    build: .       # Build the Go app from a Dockerfile in the current directory
+    ports:
+      - 8080:8080  # Expose port 8080 for the Go app
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase  # Set the MongoDB connection string
+    depends_on:
+      - mongodb   # Ensure MongoDB starts before the Go app
+  mongodb:
+    image: mongo:latest  # Use the latest official MongoDB image
+    restart: always      # Restart the container if it stops
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=rootuser
+      - MONGO_INITDB_ROOT_PASSWORD=rootpass
+    volumes:
+      - mongodb_data:/data/db  # Persist MongoDB data
+
+volumes:
+  mongodb_data:  # Named volume for MongoDB data persistence

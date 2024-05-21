@@ -37,6 +37,7 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	currTime := time.Now()
+	people := []any{}
 	for i := 0; i < 5; i++ {
 		id := uuid.NewString()
 		person := models.Person{
@@ -46,13 +47,13 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 			City:      "Toronto",
 			CreatedAt: currTime,
 		}
-
-		_, err := collection.InsertOne(context.Background(), person)
-		if err != nil {
-			w.Write([]byte("Unable to insert document:" + err.Error()))
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
+		people = append(people, person)
+	}
+	_, err = collection.InsertMany(context.Background(), people)
+	if err != nil {
+		w.Write([]byte("error inserting many:" + err.Error()))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 	w.Write([]byte("Inserted successfully"))
 	w.WriteHeader(http.StatusOK)

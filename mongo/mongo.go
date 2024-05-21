@@ -2,7 +2,6 @@ package mongo
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -12,8 +11,6 @@ import (
 func GetMongoClient(mongoURI string) (*mongo.Client, error) {
 	user := os.Getenv("MONGO_INITDB_ROOT_USERNAME")
 	passwd := os.Getenv("MONGO_INITDB_ROOT_PASSWORD")
-	fmt.Println("user:", user)
-	fmt.Println("passwd:", passwd)
 	clientOptions := options.Client().ApplyURI(mongoURI).SetAuth(options.Credential{
 		Username:   user,
 		Password:   passwd,

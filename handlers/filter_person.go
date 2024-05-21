@@ -76,7 +76,7 @@ func buildFilter(filters []models.Filter) bson.M {
 			}
 			return bsonFilter
 		}
-		// otherwise we use an AND.. todo
+		// otherwise we use an AND
 		opMap := bson.M{}
 		for _, op := range f.Ops {
 			opMap[op.Op] = op.Value

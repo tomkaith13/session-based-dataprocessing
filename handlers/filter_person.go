@@ -24,8 +24,10 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 	collection := client.Database("mydatabase").Collection("persons")
 
 	filters := []models.Filter{
-		{Field: "age", Op: "$gte", Value: 50},
-		{Field: "city", Op: "", Value: "Toronto"},
+		// {Field: "age", Op: "$gte", Value: 50},
+		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 50}}},
+		// {Field: "city", Op: "", Value: "Toronto"},
+		{Field: "city", Ops: []models.Operator{{Op: "", Value: "Toronto"}}},
 	}
 
 	filter := buildFilter(filters)
@@ -62,13 +64,19 @@ func buildFilter(filters []models.Filter) bson.M {
 	bsonFilter := bson.M{}
 
 	for _, f := range filters {
-		if f.Op == "" {
-			// If no operator, assume equality
-			bsonFilter[f.Field] = f.Value
-		} else {
-			// Use the specified operator
-			bsonFilter[f.Field] = bson.M{f.Op: f.Value}
+		if len(f.Ops) == 1 {
+			onlyOp := f.Ops[0]
+			if onlyOp.Op == "" {
+				// If no operator, assume equality
+				bsonFilter[f.Field] = onlyOp.Value
+			} else {
+				// Use the specified operator
+				bsonFilter[f.Field] = bson.M{onlyOp.Op: onlyOp.Value}
+			}
+			return bsonFilter
 		}
+		// otherwise we use an AND.. todo
+
 	}
 	return bsonFilter
 }

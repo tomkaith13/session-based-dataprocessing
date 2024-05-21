@@ -13,8 +13,7 @@ type Person struct {
 // Filter struct to represent a single filter condition
 type Filter struct {
 	Field string
-	Op    string // Comparison operator: "$eq", "$ne", "$gt", "$gte", "$lt", "$lte", etc.
-	Value interface{}
+	Ops   []Operator
 }
 type Operator struct {
 	Op    string // Comparison operator: "$eq", "$ne", "$gt", "$gte", "$lt", "$lte", etc.

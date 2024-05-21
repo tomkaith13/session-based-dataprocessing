@@ -1,5 +1,7 @@
 clean:
 	docker compose down
+buildup:
+	docker-compose up --build
 up:
 	docker compose up
 restart:

@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/tomkaith13/session-based-dataprocessing/handlers"
 )
 
 func main() {
@@ -16,8 +17,10 @@ func main() {
 
 	// Dummy Endpoint
 	r.Get("/dummy", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("This is a dummy endpoint!"))
+		w.Write([]byte("This is a dummy endpoint!!!!"))
 	})
+
+	r.Post("/person", handlers.CreatePersonHandler)
 
 	// Start Server
 	http.ListenAndServe(":8080", r)

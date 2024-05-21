@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
@@ -40,10 +41,13 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 	people := []any{}
 	for i := 0; i < 5; i++ {
 		id := uuid.NewString()
+
+		randAge := rand.Intn(91)
+		randAge += 10
 		person := models.Person{
 			Id:        id,
 			Name:      "name" + strconv.Itoa(i),
-			Age:       21,
+			Age:       randAge,
 			City:      "Toronto",
 			CreatedAt: currTime,
 		}

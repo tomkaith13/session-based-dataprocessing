@@ -3,9 +3,20 @@ package models
 import "time"
 
 type Person struct {
-	Id        string    `bson:"_id"`
-	Name      string    `bson:"name"`
-	City      string    `bson:"city"`
-	Age       int       `bson:"age"`
-	CreatedAt time.Time `bson:"createdAt"`
+	Id        string    `bson:"_id" json:"id"`
+	Name      string    `bson:"name" json:"Name"`
+	City      string    `bson:"city" json:"City"`
+	Age       int       `bson:"age" json:"Age"`
+	CreatedAt time.Time `bson:"createdAt" json:"Created At"`
+}
+
+// Filter struct to represent a single filter condition
+type Filter struct {
+	Field string
+	Op    string // Comparison operator: "$eq", "$ne", "$gt", "$gte", "$lt", "$lte", etc.
+	Value interface{}
+}
+type Operator struct {
+	Op    string // Comparison operator: "$eq", "$ne", "$gt", "$gte", "$lt", "$lte", etc.
+	Value interface{}
 }

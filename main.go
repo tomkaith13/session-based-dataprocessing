@@ -21,6 +21,7 @@ func main() {
 	})
 
 	r.Post("/person", handlers.CreatePersonHandler)
+	r.Post("/person-search", handlers.FilterPersonsHandler)
 
 	// Start Server
 	http.ListenAndServe(":8080", r)

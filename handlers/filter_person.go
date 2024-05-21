@@ -24,10 +24,7 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 	collection := client.Database("mydatabase").Collection("persons")
 
 	filters := []models.Filter{
-		// {Field: "age", Op: "$gte", Value: 50},
-		// {Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 50}}},
 		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 10}, {Op: "$lte", Value: 70}}},
-		// {Field: "city", Op: "", Value: "Toronto"},
 		{Field: "city", Ops: []models.Operator{{Op: "", Value: "Toronto"}}},
 	}
 

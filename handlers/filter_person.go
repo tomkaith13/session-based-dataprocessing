@@ -24,7 +24,7 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 	collection := client.Database("mydatabase").Collection("persons")
 
 	filters := []models.Filter{
-		{Field: "user_id", Ops: []models.Operator{{Op: "", Value: "3"}}},
+		// {Field: "user_id", Ops: []models.Operator{{Op: "", Value: "3"}}},
 		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 20}, {Op: "$lte", Value: 70}}},
 		{Field: "city", Ops: []models.Operator{{Op: "", Value: "Toronto"}}},
 	}
@@ -53,7 +53,7 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 	// Set content type to JSON
 	w.Header().Set("Content-Type", "application/json")
 
-	fmt.Println("people:", people)
+	// fmt.Println("people:", people)
 
 	// Encode results as JSON and write to the response
 	json.NewEncoder(w).Encode(people)

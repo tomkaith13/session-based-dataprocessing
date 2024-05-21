@@ -28,7 +28,7 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 
 	indexModel := mongo_drv.IndexModel{
 		Keys:    bson.M{"createdAt": 1},
-		Options: options.Index().SetExpireAfterSeconds(600), // Expire after 1 hour
+		Options: options.Index().SetExpireAfterSeconds(600), // Expire after 10 min
 	}
 	_, err = collection.Indexes().CreateOne(context.Background(), indexModel)
 	if err != nil {

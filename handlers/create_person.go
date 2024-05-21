@@ -38,6 +38,15 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	userIdIndexModel := mongo_drv.IndexModel{
+		Keys: bson.M{"user_id": 1},
+	}
+	_, err = collection.Indexes().CreateOne(context.Background(), userIdIndexModel)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	ageIndexModel := mongo_drv.IndexModel{
 		Keys: bson.M{"age": 1},
 	}
@@ -56,6 +65,7 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 		randAge += 10
 		person := models.Person{
 			Id:        id,
+			UserId:    strconv.Itoa(i),
 			Name:      "name" + strconv.Itoa(i),
 			Age:       randAge,
 			City:      "Toronto",

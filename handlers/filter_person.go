@@ -24,11 +24,13 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 	collection := client.Database("mydatabase").Collection("persons")
 
 	filters := []models.Filter{
-		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 10}, {Op: "$lte", Value: 70}}},
+		{Field: "user_id", Ops: []models.Operator{{Op: "", Value: "3"}}},
+		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 20}, {Op: "$lte", Value: 70}}},
 		{Field: "city", Ops: []models.Operator{{Op: "", Value: "Toronto"}}},
 	}
 
 	filter := buildFilter(filters)
+	fmt.Println("filter:", filter)
 
 	// Find matching people in the collection
 	cursor, err := collection.Find(context.TODO(), filter)
@@ -71,7 +73,7 @@ func buildFilter(filters []models.Filter) bson.M {
 				// Use the specified operator
 				bsonFilter[f.Field] = bson.M{onlyOp.Op: onlyOp.Value}
 			}
-			return bsonFilter
+			continue
 		}
 		// otherwise we use an AND
 		opMap := bson.M{}

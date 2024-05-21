@@ -27,11 +27,21 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	collection := client.Database("mydatabase").Collection("persons")
 
+	//  As per docs, CreateIndex is not applied if one already is in-place. See https://stackoverflow.com/a/49476360/224640
 	indexModel := mongo_drv.IndexModel{
 		Keys:    bson.M{"createdAt": 1},
 		Options: options.Index().SetExpireAfterSeconds(600), // Expire after 10 min
 	}
 	_, err = collection.Indexes().CreateOne(context.Background(), indexModel)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	ageIndexModel := mongo_drv.IndexModel{
+		Keys: bson.M{"age": 1},
+	}
+	_, err = collection.Indexes().CreateOne(context.Background(), ageIndexModel)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

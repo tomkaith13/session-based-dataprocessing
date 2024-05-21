@@ -25,7 +25,8 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 
 	filters := []models.Filter{
 		// {Field: "age", Op: "$gte", Value: 50},
-		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 50}}},
+		// {Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 50}}},
+		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 10}, {Op: "$lte", Value: 70}}},
 		// {Field: "city", Op: "", Value: "Toronto"},
 		{Field: "city", Ops: []models.Operator{{Op: "", Value: "Toronto"}}},
 	}
@@ -76,6 +77,11 @@ func buildFilter(filters []models.Filter) bson.M {
 			return bsonFilter
 		}
 		// otherwise we use an AND.. todo
+		opMap := bson.M{}
+		for _, op := range f.Ops {
+			opMap[op.Op] = op.Value
+		}
+		bsonFilter[f.Field] = opMap
 
 	}
 	return bsonFilter

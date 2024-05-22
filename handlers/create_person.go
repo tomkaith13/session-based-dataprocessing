@@ -58,7 +58,7 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 
 	currTime := time.Now()
 	people := []any{}
-	for i := 1; i <= 500; i++ {
+	for i := 1; i <= 1000000; i++ {
 		id := uuid.NewString()
 
 		randAge := rand.Intn(91)

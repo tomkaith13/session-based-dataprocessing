@@ -1,3 +1,20 @@
+# Intro
+This repo is a POC that looks at setting up a session based table using MongoDB to do some processing as long as the 
+data resides in the database. We use TTL Indexes to ensure the data expires.
+## How to run
+You can build the containers and the get the service running using:
+```
+make buildup
+```
+This runs the container in as a foreground process.
+Please use `-d` option to the `buildup` rule in Makefile to ensure it runs as a daemon.
+Once you are done, clean up can be done using
+```
+make clean
+```
+
+If you want to clear the DB, please delete the Volume setup.
+
 ## How to login to mongosh to check contents
 1. We first attach a shell to the mongodb container of the service
 2. We then initiate `mongosh` command

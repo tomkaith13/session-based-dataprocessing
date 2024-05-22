@@ -1,6 +1,6 @@
 # Intro
 This repo is a POC that looks at setting up a session based table using MongoDB to do some processing as long as the 
-data resides in the database. We use TTL Indexes to ensure the data expires.
+data resides in the database. We use [TTL Indexes](https://www.mongodb.com/docs/manual/core/index-ttl/) to ensure the data expires.
 ## How to run
 You can build the containers and the get the service running using:
 ```
@@ -64,3 +64,6 @@ mydatabase> db.persons.find()
   }
 ]
 ```
+## TODOs
+- Make a new endpoint to filter data using a `POST` and keep table creations as a separate one
+

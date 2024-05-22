@@ -27,6 +27,7 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 		// {Field: "user_id", Ops: []models.Operator{{Op: "", Value: "3"}}},
 		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 20}, {Op: "$lte", Value: 70}}},
 		{Field: "city", Ops: []models.Operator{{Op: "", Value: "Toronto"}}},
+		{Field: "user_id", Ops: []models.Operator{{Op: "$in", Value: []string{"3", "5", "100"}}}},
 	}
 
 	filter := buildFilter(filters)

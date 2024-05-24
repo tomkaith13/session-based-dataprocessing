@@ -58,6 +58,7 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 
 	currTime := time.Now()
 	people := []any{}
+	// Now assume we get this from a bulk-load operation either from a network call or a blob storage read.
 	for i := 1; i <= 1000000; i++ {
 		id := uuid.NewString()
 

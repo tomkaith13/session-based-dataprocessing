@@ -66,4 +66,6 @@ mydatabase> db.persons.find()
 ```
 ## TODOs
 - Make a new endpoint to filter data using a `POST` and keep table creations as a separate one
+- Create an endpoint to generate the same data using Parquet
+- Create a filter using Apache Arrow
 

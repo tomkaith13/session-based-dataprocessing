@@ -53,6 +53,8 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("size:", fi.Size())
 
+	// Now we can send this to a blob storage like GCS with an Object Lifecycle to enforce longer TTL if we want or use BQ to filter from these directly
+
 	w.WriteHeader(http.StatusCreated)
 
 }

@@ -22,6 +22,7 @@ func main() {
 
 	r.Post("/person", handlers.CreatePersonHandler)
 	r.Post("/person-search", handlers.FilterPersonsHandler)
+	r.Post("/person-parquet", handlers.CreatePersonParquetHandler)
 
 	// Start Server
 	http.ListenAndServe(":8080", r)

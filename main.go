@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/tomkaith13/session-based-dataprocessing/ddb"
 	"github.com/tomkaith13/session-based-dataprocessing/handlers"
 )
 
@@ -14,6 +15,9 @@ func main() {
 	// Middleware for logging and recovery
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
+
+	// initialize duckdb
+	ddb.InitDuckDB()
 
 	// Dummy Endpoint
 	r.Get("/dummy", func(w http.ResponseWriter, r *http.Request) {

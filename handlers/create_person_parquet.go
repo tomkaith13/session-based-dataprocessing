@@ -10,18 +10,12 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/parquet-go/parquet-go"
+	"github.com/tomkaith13/session-based-dataprocessing/models"
 )
 
-type PersonParquet struct {
-	Id       uuid.UUID `parquet:"id"`
-	Name     string    `parquet:"name,lz4"`
-	Age      int       `parquet:"age"`
-	Location string    `parquet:"location,lz4"`
-}
-
 const (
-	parquetFilePath = "./file.pq" // this filename can be renamed with the sessionid to ensure we have one file per session
-	TTL             = time.Duration(1) * time.Minute
+	parquetFilePath = "./file.parquet" // this filename can be renamed with the sessionid to ensure we have one file per session
+	TTL             = time.Duration(15) * time.Minute
 )
 
 func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +28,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 
 		randAge := rand.Intn(91)
 		randAge += 10
-		person := PersonParquet{
+		person := models.PersonParquet{
 			Id:       id,
 			Name:     "name" + strconv.Itoa(i),
 			Age:      randAge,

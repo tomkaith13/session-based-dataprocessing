@@ -1,5 +1,5 @@
 clean:
-	docker compose down
+	docker-compose down --rmi all -v
 buildup:
 	docker-compose up --build
 up:

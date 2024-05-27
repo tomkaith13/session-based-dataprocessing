@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/parquet-go/parquet-go"
@@ -19,7 +20,8 @@ type PersonParquet struct {
 }
 
 const (
-	parquetFilePath = "./file.pq"
+	parquetFilePath = "./file.pq" // this filename can be renamed with the sessionid to ensure we have one file per session
+	TTL             = time.Duration(1) * time.Minute
 )
 
 func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
@@ -54,6 +56,17 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("size:", fi.Size())
 
 	// Now we can send this to a blob storage like GCS with an Object Lifecycle to enforce longer TTL if we want or use BQ to filter from these directly
+
+	// For now, lets assume this happens on disk and goruntime is the one who cleansup after
+	time.AfterFunc(TTL, func() {
+
+		err := os.Remove(parquetFilePath)
+		if err != nil {
+			fmt.Println("error removed parquet file")
+		} else {
+			fmt.Println("removed parquet file")
+		}
+	})
 
 	w.WriteHeader(http.StatusCreated)
 

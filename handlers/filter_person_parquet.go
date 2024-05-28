@@ -29,7 +29,7 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 	//  We can also use read_parquet to read files directly from GCS and query from disk using something like:
 	// SELECT * FROM read_parquet('https://some.url/some_file.parquet');
 	// See https://duckdb.org/docs/data/parquet/overview.html#examples
-	rows, err := conn.QueryContext(ctx, `SELECT name FROM 'file.parquet' WHERE age < 90 AND age >= 50`)
+	rows, err := conn.QueryContext(ctx, `SELECT name,age FROM 'file.parquet' WHERE age < 90 AND age >= 50`)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -40,7 +40,7 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 		pperson := new(models.PersonParquet)
 		// err := rows.Scan(&pperson.Id, &pperson.Name)
 		// Also read up Partial Reads: https://duckdb.org/docs/data/parquet/overview.html#partial-reading
-		err := rows.Scan(&pperson.Name)
+		err := rows.Scan(&pperson.Name, &pperson.Age)
 		if err != nil {
 			fmt.Println("unable to scan row", err.Error())
 			w.WriteHeader(http.StatusInternalServerError)

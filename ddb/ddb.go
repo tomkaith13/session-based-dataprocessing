@@ -20,6 +20,10 @@ func InitDuckDB() {
 	}
 
 	DService.DB = duckdb
+	// Install httpfs extension
+	if _, err := duckdb.Exec("INSTALL httpfs; LOAD httpfs;"); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (ddb DuckDBService) GetDB() *sql.DB {

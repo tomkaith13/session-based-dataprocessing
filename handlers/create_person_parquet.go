@@ -30,6 +30,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 		randAge += 10
 		person := models.PersonParquet{
 			Id:       id,
+			UserId:   strconv.Itoa(i),
 			Name:     "name" + strconv.Itoa(i),
 			Age:      randAge,
 			Location: "Toronto",

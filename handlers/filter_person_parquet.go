@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -29,7 +30,8 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 	//  We can also use read_parquet to read files directly from GCS and query from disk using something like:
 	// SELECT * FROM read_parquet('https://some.url/some_file.parquet');
 	// See https://duckdb.org/docs/data/parquet/overview.html#examples
-	rows, err := conn.QueryContext(ctx, `SELECT name,age FROM 'file.parquet' WHERE age < 90 AND age >= 50`)
+	// rows, err := conn.QueryContext(ctx, `SELECT name,age FROM 'https://github.com/tomkaith13/session-based-dataprocessing/raw/main/file.parquet' WHERE age < 90 AND age >= 30 AND userId IN (1,10,100,1000,10000,50000)`)
+	rows, err := conn.QueryContext(ctx, `SELECT name,age FROM 'file.parquet' WHERE age < 90 AND age >= 30 AND userId IN (1,10,100,1000,10000,50000)`)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -50,6 +52,9 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("count: ", len(res))
+	w.Header().Set("Content-Type", "application/json")
+
+	json.NewEncoder(w).Encode(res)
 
 	w.WriteHeader(http.StatusAccepted)
 }

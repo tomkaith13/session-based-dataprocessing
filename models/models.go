@@ -26,8 +26,9 @@ type Operator struct {
 }
 
 type PersonParquet struct {
-	Id       uuid.UUID `parquet:"id"`
-	Name     string    `parquet:"name,lz4"`
-	Age      int       `parquet:"age"`
-	Location string    `parquet:"location,lz4"`
+	Id       uuid.UUID `parquet:"id" json:"-"`
+	UserId   string    `parquet:"userId" json:"-"`
+	Name     string    `parquet:"name,lz4" json:"Name"`
+	Age      int       `parquet:"age" json:"Age"`
+	Location string    `parquet:"location,lz4" json:"-"`
 }

@@ -1,6 +1,14 @@
 # Intro
 This repo is a POC that looks at setting up a session based table using MongoDB to do some processing as long as the 
 data resides in the database. We use [TTL Indexes](https://www.mongodb.com/docs/manual/core/index-ttl/) to ensure the data expires.
+
+This repo also includes doing the same level of data processing using a Apache Parquet directly and leveraging Apache Arrow implementations (In this case, DuckDB)
+to read in those files directly into memory and processing it.
+This means the files can persist in Cloud Storage and we can leverage Parquet's compression and metadata calculations for lookups.
+
+This is a useful workaround if you dont want data to live in your infra but in cheaper blob storages.
+The code also has an example (commented out) where the query directly reads from a public url.
+We are able to filter based on the query from 1M records under 5secs.
 ## How to run
 You can build the containers and the get the service running using:
 ```
@@ -66,6 +74,5 @@ mydatabase> db.persons.find()
 ```
 ## TODOs
 - Make a new endpoint to filter data using a `POST` and keep table creations as a separate one
-- Create an endpoint to generate the same data using Parquet
-- Create a filter using Apache Arrow
+
 

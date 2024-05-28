@@ -24,6 +24,20 @@ func InitDuckDB() {
 	if _, err := duckdb.Exec("INSTALL httpfs; LOAD httpfs;"); err != nil {
 		log.Fatal(err)
 	}
+
+	// In theory, if we ever want this from GCS, we can do something like this
+	// Install httpfs and configure credentials
+	// if _, err := db.Exec(`
+	//     INSTALL httpfs;
+	//     LOAD httpfs;
+	//     CREATE SECRET "gcs_credentials" (
+	//         TYPE GCS,
+	//         KEY_ID '<your-key-id>',
+	//         SECRET '<your-secret-key>'
+	//     );
+	// `); err != nil {
+	//     log.Fatal(err)
+	// }
 }
 
 func (ddb DuckDBService) GetDB() *sql.DB {

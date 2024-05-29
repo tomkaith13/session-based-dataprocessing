@@ -71,6 +71,10 @@ mydatabase> db.persons.find()
   }
 ]
 ```
+
+## k6 Comparision between mongo and parquet
+![image](./k6/k6.png)
+
 ## TODOs
 - Make a new endpoint to filter data using a `POST` and keep table creations as a separate one
 

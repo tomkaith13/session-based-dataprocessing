@@ -35,6 +35,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 			Name:     "name" + strconv.Itoa(i),
 			Age:      randAge,
 			Location: "Toronto",
+			Created:  time.Now().Add(time.Duration(i) * time.Hour),
 		}
 		persons = append(persons, person)
 

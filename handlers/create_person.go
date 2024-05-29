@@ -38,23 +38,23 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userIdIndexModel := mongo_drv.IndexModel{
-		Keys: bson.M{"user_id": 1},
-	}
-	_, err = collection.Indexes().CreateOne(context.Background(), userIdIndexModel)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	// userIdIndexModel := mongo_drv.IndexModel{
+	// 	Keys: bson.M{"user_id": 1},
+	// }
+	// _, err = collection.Indexes().CreateOne(context.Background(), userIdIndexModel)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+	// 	return
+	// }
 
-	ageIndexModel := mongo_drv.IndexModel{
-		Keys: bson.M{"age": 1},
-	}
-	_, err = collection.Indexes().CreateOne(context.Background(), ageIndexModel)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	// ageIndexModel := mongo_drv.IndexModel{
+	// 	Keys: bson.M{"age": 1},
+	// }
+	// _, err = collection.Indexes().CreateOne(context.Background(), ageIndexModel)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+	// 	return
+	// }
 
 	currTime := time.Now()
 	people := []any{}

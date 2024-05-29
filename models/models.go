@@ -31,4 +31,5 @@ type PersonParquet struct {
 	Name     string    `parquet:"name,lz4" json:"Name"`
 	Age      int       `parquet:"age" json:"Age"`
 	Location string    `parquet:"location,lz4" json:"-"`
+	Created  time.Time `parquet:"createdAt" json:"created-at"`
 }

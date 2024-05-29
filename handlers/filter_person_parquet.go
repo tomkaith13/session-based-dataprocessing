@@ -34,7 +34,7 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 	// `)
 	// See https://duckdb.org/docs/data/parquet/overview.html#examples
 	rows, err := conn.QueryContext(ctx, `
-	SELECT name,age 
+	SELECT name,age,createdAt 
 	FROM 'file.parquet' 
 	WHERE age < 90 AND age >= 50 AND userId IN (1,10,100,500,1000,50000, 10000,100000, 500000)
 	`)
@@ -48,7 +48,7 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 		pperson := new(models.PersonParquet)
 		// err := rows.Scan(&pperson.Id, &pperson.Name)
 		// Also read up Partial Reads: https://duckdb.org/docs/data/parquet/overview.html#partial-reading
-		err := rows.Scan(&pperson.Name, &pperson.Age)
+		err := rows.Scan(&pperson.Name, &pperson.Age, &pperson.Created)
 		if err != nil {
 			fmt.Println("unable to scan row", err.Error())
 			w.WriteHeader(http.StatusInternalServerError)

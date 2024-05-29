@@ -21,7 +21,8 @@ const (
 func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 
 	f, _ := os.Create(parquetFilePath)
-	writer := parquet.NewWriter(f)
+	persons := []models.PersonParquet{}
+	writer := parquet.NewGenericWriter[models.PersonParquet](f)
 
 	for i := 1; i < 1000000; i++ {
 		id := uuid.New()
@@ -35,12 +36,13 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 			Age:      randAge,
 			Location: "Toronto",
 		}
+		persons = append(persons, person)
 
-		err := writer.Write(person)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+	}
+	_, err := writer.Write(persons)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	_ = writer.Close()
 	_ = f.Close()

@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/parquet-go/parquet-go"
 	"github.com/tomkaith13/session-based-dataprocessing/models"
+	"github.com/tomkaith13/session-based-dataprocessing/utils"
 )
 
 const (
@@ -34,7 +35,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 			UserId:   strconv.Itoa(i),
 			Name:     "name" + strconv.Itoa(i),
 			Age:      randAge,
-			Location: "Toronto",
+			Location: utils.RandomizedLocationCreator(),
 			Created:  time.Now().Add(time.Duration(i) * time.Hour),
 		}
 		persons = append(persons, person)

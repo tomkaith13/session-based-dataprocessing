@@ -15,6 +15,7 @@ import (
 
 	"github.com/tomkaith13/session-based-dataprocessing/models"
 	"github.com/tomkaith13/session-based-dataprocessing/mongo"
+	"github.com/tomkaith13/session-based-dataprocessing/utils"
 )
 
 func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
@@ -69,7 +70,7 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 			UserId:    strconv.Itoa(i),
 			Name:      "name" + strconv.Itoa(i),
 			Age:       randAge,
-			City:      "Toronto",
+			City:      utils.RandomizedLocationCreator(),
 			CreatedAt: currTime,
 		}
 		people = append(people, person)

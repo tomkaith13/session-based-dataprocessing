@@ -26,7 +26,7 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 	filters := []models.Filter{
 		// {Field: "user_id", Ops: []models.Operator{{Op: "", Value: "3"}}},
 		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 20}, {Op: "$lte", Value: 70}}},
-		{Field: "city", Ops: []models.Operator{{Op: "", Value: "Toronto"}}},
+		// {Field: "city", Ops: []models.Operator{{Op: "$in", Value: []string{"Toronto", "Bangalore", "Mountain View"}}}},
 		{Field: "user_id", Ops: []models.Operator{{Op: "$in", Value: []string{"3", "5", "100", "50000", "-1"}}}}, // We add various valid and invalid ids
 	}
 

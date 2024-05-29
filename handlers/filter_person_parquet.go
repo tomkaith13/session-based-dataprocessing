@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -22,6 +23,11 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	conn, err := db.Conn(context.Background())
+	if err != nil {
+		err = errors.New("unable to connect to DB:" + err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	defer conn.Close()
 
 	ctx, cancel := context.WithTimeout(r.Context(), 60*time.Second)
@@ -36,7 +42,7 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 	rows, err := conn.QueryContext(ctx, `
 	SELECT name,age,createdAt 
 	FROM 'file.parquet' 
-	WHERE age < 90 AND age >= 50 AND userId IN (1,10,100,500,1000,50000, 10000,100000, 500000)
+	WHERE age < 90 AND age >= 50 AND userId IN (1,10,100,500,1000,50000, 10000,100000, 500000) 
 	`)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

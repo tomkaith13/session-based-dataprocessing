@@ -35,7 +35,8 @@ func FilterPersonsParquetHandler(w http.ResponseWriter, r *http.Request) {
 
 	//  We can also use read_parquet to read files directly from GCS and query from disk using something like:
 	// rows, err := conn.QueryContext(ctx, `
-	// SELECT name,age FROM 'https://github.com/tomkaith13/session-based-dataprocessing/raw/main/file.parquet'
+	// SELECT name,age
+	// FROM 'https://github.com/tomkaith13/session-based-dataprocessing/raw/main/file.parquet'
 	// WHERE age < 90 AND age >= 30 AND userId IN (1,10,100,500,1000,50000, 10000,100000, 500000)
 	// `)
 	// See https://duckdb.org/docs/data/parquet/overview.html#examples

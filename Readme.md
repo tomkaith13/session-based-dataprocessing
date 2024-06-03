@@ -3,7 +3,7 @@ This repo is a POC that looks at setting up a session based table using MongoDB 
 data resides in the database. We use [TTL Indexes](https://www.mongodb.com/docs/manual/core/index-ttl/) to ensure the data expires.
 
 This repo also includes doing the same level of data processing using a [Apache Parquet](https://parquet.apache.org/) directly and leveraging Apache Arrow implementations (In this case, [DuckDB](https://duckdb.org/docs/data/parquet/overview.html))
-to read in those files directly into memory and processing it.
+to read in the right columns directly into memory and processing it.
 This means the files can persist in Cloud Storage and we can leverage Parquet's compression and metadata calculations for lookups.
 
 This is a useful workaround if you dont want data to live in your infra but in cheaper blob storages.

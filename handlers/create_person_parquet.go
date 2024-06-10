@@ -30,6 +30,12 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 
 		randAge := rand.Intn(91)
 		randAge += 10
+
+		// Income is randomly generated between 25k and 1.5M.
+		// This is to accomodate high cardinality columns
+		randIncome := rand.Intn(1500000 - 25000)
+		randIncome += 25000
+
 		person := models.PersonParquet{
 			Id:       id,
 			UserId:   strconv.Itoa(i),
@@ -37,6 +43,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 			Age:      randAge,
 			Location: utils.RandomizedLocationCreator(),
 			Created:  time.Now().Add(time.Duration(randAge*24) * time.Hour),
+			Income:   randIncome,
 		}
 		persons = append(persons, person)
 

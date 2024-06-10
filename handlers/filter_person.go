@@ -5,12 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 
 	"github.com/tomkaith13/session-based-dataprocessing/models"
 	"github.com/tomkaith13/session-based-dataprocessing/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
@@ -23,18 +25,28 @@ func FilterPersonsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	collection := client.Database("mydatabase").Collection("persons")
 
+	lowerInc := rand.Intn(100000)
+	lowerInc += 25000
+
+	higherInc := rand.Intn(500000)
+	higherInc += 25000
+
 	filters := []models.Filter{
 		// {Field: "user_id", Ops: []models.Operator{{Op: "", Value: "3"}}},
 		{Field: "age", Ops: []models.Operator{{Op: "$gte", Value: 20}, {Op: "$lte", Value: 70}}},
+		{Field: "inc", Ops: []models.Operator{{Op: "$gte", Value: lowerInc}, {Op: "$lte", Value: higherInc}}},
 		// {Field: "city", Ops: []models.Operator{{Op: "$in", Value: []string{"Toronto", "Bangalore", "Mountain View"}}}},
-		{Field: "user_id", Ops: []models.Operator{{Op: "$in", Value: []string{"3", "5", "100", "50000", "-1"}}}}, // We add various valid and invalid ids
+		// {Field: "user_id", Ops: []models.Operator{{Op: "$in", Value: []string{"3", "5", "100", "50000", "-1"}}}}, // We add various valid and invalid ids
 	}
 
 	filter := buildFilter(filters)
 	fmt.Println("filter:", filter)
 
+	findOptions := options.Find()
+	findOptions.SetLimit(100)
+
 	// Find matching people in the collection
-	cursor, err := collection.Find(context.TODO(), filter)
+	cursor, err := collection.Find(context.TODO(), filter, findOptions)
 	// cursor, err := collection.Find(context.TODO(), bson.M{"city": "Toronto"})
 	if err != nil {
 		log.Fatal(err)

@@ -12,6 +12,7 @@ type Person struct {
 	Name      string    `bson:"name" json:"Name"`
 	City      string    `bson:"city" json:"City"`
 	Age       int       `bson:"age" json:"Age"`
+	Income    int       `bson:"inc" json:"income"`
 	CreatedAt time.Time `bson:"createdAt" json:"Created At"`
 }
 
@@ -31,5 +32,6 @@ type PersonParquet struct {
 	Name     string    `parquet:"name,lz4" json:"Name"`
 	Age      int       `parquet:"age" json:"Age"`
 	Location string    `parquet:"location,lz4" json:"-"`
-	Created  time.Time `parquet:"createdAt" json:"created-at"`
+	Income   int       `parquet:"inc,lz4" json:"income"`
+	Created  time.Time `parquet:"createdAt" json:"created-at,omitempty"`
 }

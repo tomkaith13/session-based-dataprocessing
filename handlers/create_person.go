@@ -57,6 +57,15 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	incomeIndexModel := mongo_drv.IndexModel{
+		Keys: bson.M{"inc": 1},
+	}
+	_, err = collection.Indexes().CreateOne(context.Background(), incomeIndexModel)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	currTime := time.Now()
 	people := []any{}
 	// Now assume we get this from a bulk-load operation either from a network call or a blob storage read.
@@ -65,6 +74,12 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 
 		randAge := rand.Intn(91)
 		randAge += 10
+
+		// Income is randomly generated between 25k and 1.5M.
+		// This is to accomodate high cardinality columns
+		randIncome := rand.Intn(1500000 - 25000)
+		randIncome += 25000
+
 		person := models.Person{
 			Id:        id,
 			UserId:    strconv.Itoa(i),
@@ -72,6 +87,7 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 			Age:       randAge,
 			City:      utils.RandomizedLocationCreator(),
 			CreatedAt: currTime,
+			Income:    randIncome,
 		}
 		people = append(people, person)
 	}

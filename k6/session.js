@@ -4,9 +4,10 @@ import http from 'k6/http'
 import sleep from 'k6'
 import { check } from 'k6';
 
-export let options = { maxRedirects: 4, duration: '20s' 
+export let options = { maxRedirects: 4, 
+  // duration: '20s' 
     
-  // scenarios: {
+  scenarios: {
     // constant_request_rate_100rps: {
     //   executor: 'constant-arrival-rate',
     //   rate: 100,
@@ -24,25 +25,29 @@ export let options = { maxRedirects: 4, duration: '20s'
     //   preAllocatedVUs: 10,
     //   env: { EXAMPLEVAR: 'create_thread_v2' },
     // },
-    // constant_request_rate_10rps: {
-    //   executor: 'constant-arrival-rate',
-    //   rate: 10,
-    //   timeUnit: '1s',
-    //   duration: '1m',
-    //   preAllocatedVUs: 10,
-    //   env: { EXAMPLEVAR: 'create_thread_v2' },
-    // },
-  // },
+    constant_request_rate_10rps: {
+      executor: 'constant-arrival-rate',
+      rate: 10,
+      timeUnit: '1s',
+      duration: '1m',
+      preAllocatedVUs: 10,
+      env: { EXAMPLEVAR: 'create_thread_v2' },
+    },
+  },
 };
-const trend1 = new Trend('filter using mongo');
-const trend2 = new Trend('filter using parquet');
-// 
+
+
+const trend1 = new Trend('filter using mongo', true);
+const trend2 = new Trend('filter using parquet', true);
+
+
 let customMetrics = {};
 for (let key in options.scenarios) {
   options.scenarios[key].env['MY_SCENARIO'] = key;
   let customMetricName = key + '_' + options.scenarios[key].env.EXAMPLEVAR;
   customMetrics[key] = new Trend(customMetricName, true);
 }
+
 export function setup() {
   const setup_resp1 = http.post('http://localhost:8080/person');
   check(setup_resp1, {

@@ -10,3 +10,5 @@ restart:
 	make clean && make up
 logs:
 	docker-compose logs
+perf:
+	k6 run ./k6/session.js

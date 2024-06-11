@@ -39,6 +39,7 @@ export let options = { maxRedirects: 4,
 
 const trend1 = new Trend('filter using mongo', true);
 const trend2 = new Trend('filter using parquet', true);
+const trend3 = new Trend('filter using parquet from table', true);
 
 
 let customMetrics = {};
@@ -57,6 +58,11 @@ export function setup() {
   const setup_resp2 = http.post('http://localhost:8080/person-parquet');
   check(setup_resp2, {
     'setup person-parquet is status 201': (r) => r.status === 201,
+  });
+
+  const setup_resp3 = http.post('http://localhost:8080/person-parquet-table');
+  check(setup_resp3, {
+    'setup person-parquet is status 201': (r) => r.status === 202,
   });
 }
 
@@ -82,5 +88,17 @@ export default function () {
   if (response2.status == 200) {
     trend2.add(response2.timings.duration);
     // customMetrics[__ENV.MY_SCENARIO].add(response2.timings.duration);
+  }
+
+
+  const response3 = http.post('http://localhost:8080/person-search-parquet-table');
+
+  check(response3, {
+    'person-parquet-search-table is status 200': (r) => r.status === 200,
+  });
+
+  if (response3.status == 200) {
+    trend3.add(response3.timings.duration);
+    // customMetrics[__ENV.MY_SCENARIO].add(response3.timings.duration);
   }
 }

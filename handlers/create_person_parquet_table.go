@@ -9,7 +9,7 @@ import (
 	"github.com/tomkaith13/session-based-dataprocessing/ddb"
 )
 
-func CreatePersonParquetViewHandler(w http.ResponseWriter, r *http.Request) {
+func CreatepersonParquetTableHandler(w http.ResponseWriter, r *http.Request) {
 	db := ddb.DService.GetDB()
 	err := db.Ping()
 	if err != nil {
@@ -29,7 +29,7 @@ func CreatePersonParquetViewHandler(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	query := `
-	CREATE OR REPLACE VIEW personParquetView AS 
+	CREATE OR REPLACE TABLE personParquetTable AS 
 	SELECT * FROM 'https://github.com/tomkaith13/session-based-dataprocessing/raw/main/file.parquet'
 	`
 	_, err = conn.QueryContext(ctx, query)

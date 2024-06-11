@@ -14,7 +14,7 @@ import (
 	"github.com/tomkaith13/session-based-dataprocessing/models"
 )
 
-func FilterPersonsParquetViewHandler(w http.ResponseWriter, r *http.Request) {
+func FilterPersonsParquetTableHandler(w http.ResponseWriter, r *http.Request) {
 	db := ddb.DService.GetDB()
 	err := db.Ping()
 	if err != nil {
@@ -49,7 +49,7 @@ func FilterPersonsParquetViewHandler(w http.ResponseWriter, r *http.Request) {
 
 	query := `
 	SELECT name,age,inc 
-	FROM personParquetView 
+	FROM personParquetTable 
 	WHERE age < 90 AND age >= 50 
 	`
 

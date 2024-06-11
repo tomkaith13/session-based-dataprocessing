@@ -29,9 +29,9 @@ type Operator struct {
 type PersonParquet struct {
 	Id       uuid.UUID `parquet:"id" json:"-"`
 	UserId   string    `parquet:"userId" json:"-"`
-	Name     string    `parquet:"name,lz4" json:"Name"`
+	Name     string    `parquet:"name,snappy" json:"Name"`
 	Age      int       `parquet:"age" json:"Age"`
-	Location string    `parquet:"location,lz4" json:"-"`
-	Income   int       `parquet:"inc,lz4" json:"income"`
+	Location string    `parquet:"location,snappy" json:"-"`
+	Income   int       `parquet:"inc,snappy" json:"income"`
 	Created  time.Time `parquet:"createdAt" json:"created-at,omitempty"`
 }

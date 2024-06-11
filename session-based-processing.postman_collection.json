@@ -61,6 +61,24 @@
 			"response": []
 		},
 		{
+			"name": "localhost:8080/person-parquet-table",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/person-parquet-table",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person-parquet-table"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "localhost:8080/person-search-parquet",
 			"request": {
 				"method": "POST",
@@ -73,6 +91,24 @@
 					"port": "8080",
 					"path": [
 						"person-search-parquet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/person-search-parquet-table",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/person-search-parquet-table",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person-search-parquet-table"
 					]
 				}
 			},

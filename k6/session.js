@@ -31,7 +31,7 @@ export let options = { maxRedirects: 4,
       timeUnit: '1s',
       duration: '1m',
       preAllocatedVUs: 10,
-      env: { EXAMPLEVAR: 'create_thread_v2' },
+      env: { EXAMPLEVAR: 'query-at-10rps' },
     },
   },
 };

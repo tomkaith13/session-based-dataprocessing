@@ -62,7 +62,7 @@ export function setup() {
 
   const setup_resp3 = http.post('http://localhost:8080/person-parquet-table');
   check(setup_resp3, {
-    'setup person-parquet is status 201': (r) => r.status === 202,
+    'setup person-parquet-table is status 201': (r) => r.status === 202,
   });
 }
 

@@ -77,6 +77,8 @@ mydatabase> db.persons.find()
 ![image](./k6/k6-mongo-with-no-index.png)
 ### Mongo with Indexes in comparision with Parquet
 ![image](./k6/k6-mongo-with-index.png)
+### Mongo with Indexes, along with Parquet via a file and parquet loaded into the DB
+![image](./k6/k6-mongo-parquet-file-and-table.png)
 
 ## TODOs
 - Make a new endpoint to filter data using a `POST` and keep table creations as a separate one

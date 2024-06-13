@@ -77,7 +77,7 @@ mydatabase> db.persons.find()
 ![image](./k6/k6-mongo-with-no-index.png)
 ### Mongo with Indexes in comparision with Parquet
 ![image](./k6/k6-mongo-with-index.png)
-### Mongo with Indexes, along with Parquet via a file and parquet loaded into the DB
+### Mongo with Indexes, along with Parquet via a file and parquet loaded into the DB at a 10 rps pinged via 10 VUs
 ![image](./k6/k6-mongo-parquet-file-and-table.png)
 
 ## TODOs

@@ -25,11 +25,11 @@ func main() {
 	})
 
 	r.Post("/person", handlers.CreatePersonHandler)
-	r.Post("/person-search", handlers.FilterPersonsHandler)
 	r.Post("/person-parquet", handlers.CreatePersonParquetHandler)
-	r.Post("/person-search-parquet", handlers.FilterPersonsParquetHandler)
-
 	r.Post("/person-parquet-table", handlers.CreatepersonParquetTableHandler)
+
+	r.Post("/person-search", handlers.FilterPersonsHandler)
+	r.Post("/person-search-parquet", handlers.FilterPersonsParquetHandler)
 	r.Post("/person-search-parquet-table", handlers.FilterPersonsParquetTableHandler)
 
 	r.Post("/sort-person", handlers.SortPersonsHandler)

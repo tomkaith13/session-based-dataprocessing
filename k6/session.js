@@ -41,6 +41,9 @@ const trend1 = new Trend('filter using mongo', true);
 const trend2 = new Trend('filter using parquet', true);
 const trend3 = new Trend('filter using parquet from table', true);
 
+const trend4 = new Trend('sort using mongo', true);
+const trend5 = new Trend('sort using duckdb table', true);
+
 
 let customMetrics = {};
 for (let key in options.scenarios) {
@@ -100,5 +103,27 @@ export default function () {
   if (response3.status == 200) {
     trend3.add(response3.timings.duration);
     // customMetrics[__ENV.MY_SCENARIO].add(response3.timings.duration);
+  }
+
+  const response4 = http.post('http://localhost:8080/sort-person');
+
+  check(response4, {
+    'person-parquet-search-table is status 200': (r) => r.status === 200,
+  });
+
+  if (response4.status == 200) {
+    trend4.add(response4.timings.duration);
+    // customMetrics[__ENV.MY_SCENARIO].add(response4.timings.duration);
+  }
+
+  const response5 = http.post('http://localhost:8080/sort-person-parquet-table');
+
+  check(response5, {
+    'person-parquet-search-table is status 200': (r) => r.status === 200,
+  });
+
+  if (response5.status == 200) {
+    trend5.add(response5.timings.duration);
+    // customMetrics[__ENV.MY_SCENARIO].add(response5.timings.duration);
   }
 }

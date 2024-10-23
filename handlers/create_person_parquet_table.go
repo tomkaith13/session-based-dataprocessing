@@ -30,9 +30,19 @@ func CreatepersonParquetTableHandler(w http.ResponseWriter, r *http.Request) {
 
 	query := `
 	CREATE OR REPLACE TABLE personParquetTable AS 
-	SELECT * FROM 'https://github.com/tomkaith13/session-based-dataprocessing/raw/main/file.parquet'
+	SELECT * FROM 'file.parquet'
 	`
 	_, err = conn.QueryContext(ctx, query)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	query2 := `
+	CREATE INDEX createdAtIndex ON personParquetTable(createdAt)
+	`
+	_, err = conn.QueryContext(ctx, query2)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

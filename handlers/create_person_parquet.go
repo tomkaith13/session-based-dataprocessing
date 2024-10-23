@@ -25,7 +25,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 	persons := []models.PersonParquet{}
 	writer := parquet.NewGenericWriter[models.PersonParquet](f)
 
-	for i := 1; i < 1000000; i++ {
+	for i := 1; i < 2000000; i++ {
 		id := uuid.New()
 
 		randAge := rand.Intn(91)
@@ -42,7 +42,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 			Name:     "name" + strconv.Itoa(i),
 			Age:      randAge,
 			Location: utils.RandomizedLocationCreator(),
-			Created:  time.Now().Add(time.Duration(randAge*24) * time.Hour),
+			Created:  time.Now().Add(time.Duration(randIncome*24) * time.Hour),
 			Income:   randIncome,
 		}
 		persons = append(persons, person)

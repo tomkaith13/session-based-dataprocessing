@@ -66,10 +66,9 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	currTime := time.Now()
 	people := []any{}
 	// Now assume we get this from a bulk-load operation either from a network call or a blob storage read.
-	for i := 1; i <= 1000000; i++ {
+	for i := 1; i <= 2000000; i++ {
 		id := uuid.NewString()
 
 		randAge := rand.Intn(91)
@@ -79,6 +78,7 @@ func CreatePersonHandler(w http.ResponseWriter, r *http.Request) {
 		// This is to accomodate high cardinality columns
 		randIncome := rand.Intn(1500000 - 25000)
 		randIncome += 25000
+		currTime := time.Now().Add(time.Duration(randIncome*24) * time.Hour)
 
 		person := models.Person{
 			Id:        id,

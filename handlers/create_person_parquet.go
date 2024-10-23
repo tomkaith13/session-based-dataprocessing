@@ -21,7 +21,11 @@ const (
 
 func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 
-	f, _ := os.Create(parquetFilePath)
+	f, err := os.Create(parquetFilePath)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 	persons := []models.PersonParquet{}
 	writer := parquet.NewGenericWriter[models.PersonParquet](f)
 
@@ -48,7 +52,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 		persons = append(persons, person)
 
 	}
-	_, err := writer.Write(persons)
+	_, err = writer.Write(persons)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -60,6 +64,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 	fi, _ := rf.Stat()
 
 	fmt.Println("size:", fi.Size())
+	fmt.Println("path:", fi.Name())
 
 	// Now we can send this to a blob storage like GCS with an Object Lifecycle to enforce longer TTL if we want or use BQ to filter from these directly
 

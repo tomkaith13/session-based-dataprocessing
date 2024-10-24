@@ -29,7 +29,15 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 	persons := []models.PersonParquet{}
 	writer := parquet.NewGenericWriter[models.PersonParquet](f)
 
-	for i := 1; i < 2000000; i++ {
+	buffer := parquet.NewGenericBuffer[models.PersonParquet](
+		parquet.SortingRowGroupConfig(
+			parquet.SortingColumns(
+				parquet.Ascending("createdAt"),
+			),
+		),
+	)
+
+	for i := 1; i < 5000000; i++ {
 		id := uuid.New()
 
 		randAge := rand.Intn(91)
@@ -52,7 +60,13 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 		persons = append(persons, person)
 
 	}
-	_, err = writer.Write(persons)
+	// _, err = writer.Write(persons)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+	// 	return
+	// }
+	buffer.Write(persons)
+	_, err = parquet.CopyRows(writer, buffer.Rows())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

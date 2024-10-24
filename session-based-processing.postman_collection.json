@@ -25,24 +25,6 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/person-search",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/person-search",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"person-search"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "localhost:8080/person-parquet",
 			"request": {
 				"method": "POST",
@@ -73,6 +55,78 @@
 					"port": "8080",
 					"path": [
 						"person-parquet-table"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sort person",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/sort-person",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sort-person"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sort person parquet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/sort-person-parquet",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sort-person-parquet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sort person parquet table",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/sort-person-parquet-table",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"sort-person-parquet-table"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/person-search",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/person-search",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"person-search"
 					]
 				}
 			},

@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"sort"
 	"strconv"
 	"time"
 
@@ -65,6 +66,7 @@ func CreatePersonParquetHandler(w http.ResponseWriter, r *http.Request) {
 	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
 	// 	return
 	// }
+	sort.Sort(buffer)
 	buffer.Write(persons)
 	_, err = parquet.CopyRows(writer, buffer.Rows())
 	if err != nil {
